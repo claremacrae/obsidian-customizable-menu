@@ -1,11 +1,11 @@
 import { FuzzySuggestModal, Command, FuzzyMatch, setIcon } from "obsidian";
-import CustomSidebarPlugin from "src/main";
+import CustomMenuPlugin from "src/main";
 
 export default class IconPicker extends FuzzySuggestModal<string>{
-	plugin: CustomSidebarPlugin;
+	plugin: CustomMenuPlugin;
 	command: Command;
 
-	constructor(plugin: CustomSidebarPlugin, command: Command) {
+	constructor(plugin: CustomMenuPlugin, command: Command) {
 		super(plugin.app);
 		this.plugin = plugin;
 		this.command = command;
@@ -37,13 +37,11 @@ export default class IconPicker extends FuzzySuggestModal<string>{
 	}
 
 	async onChooseItem(item: string): Promise<void> {
-		this.plugin.addRibbonIcon(item, this.command.name, () => {
-			//@ts-ignore
-			this.app.commands.executeCommandById(this.command.id);
-		})
-		this.command.icon = item;
-		this.plugin.settings.sidebarCommands.push(this.command);
+		const command = {name: this.command.name, id: this.command.id, icon: item}
+		this.plugin.addMenuItem(command);
+		this.plugin.settings.menuCommands.push(this.command);
 		await this.plugin.saveSettings();
+		
 		setTimeout(() => {
 			dispatchEvent(new Event("CS-addedCommand"));
 		}, 100);

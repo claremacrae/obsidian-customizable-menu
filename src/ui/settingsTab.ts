@@ -1,21 +1,21 @@
 import { PluginSettingTab, App, Setting, setIcon, Command, Notice } from "obsidian";
-import CustomSidebarPlugin from "src/main";
+import CustomMenuPlugin from "src/main";
 import CommandSuggester from "./commandSuggester";
 
-export interface CustomSidebarSettings {
-    sidebarCommands: Command[];
+export interface CustomMenuSettings {
+    menuCommands: Command[];
     hiddenCommands: string[];
 }
 
-export const DEFAULT_SETTINGS: CustomSidebarSettings = {
-    sidebarCommands: [],
+export const DEFAULT_SETTINGS: CustomMenuSettings = {
+    menuCommands: [],
     hiddenCommands: [],
 }
 
-export default class CustomSidebarSettingsTab extends PluginSettingTab {
-    plugin: CustomSidebarPlugin;
+export default class CustomMenuSettingsTab extends PluginSettingTab {
+    plugin: CustomMenuPlugin;
 
-    constructor(app: App, plugin: CustomSidebarPlugin) {
+    constructor(app: App, plugin: CustomMenuPlugin) {
         super(app, plugin);
         this.plugin = plugin;
         addEventListener("CS-addedCommand", () => {
@@ -28,11 +28,11 @@ export default class CustomSidebarSettingsTab extends PluginSettingTab {
 
         containerEl.empty();
 
-        containerEl.createEl('h2', { text: 'Customizable Sidebar Settings' });
+        containerEl.createEl('h2', { text: 'Customizable Menu Settings' });
 
         new Setting(containerEl)
-            .setName("Add Command to Sidebar")
-            .setDesc("Add a new Command to the left Sidebar Ribbon")
+            .setName("Add Command to Menu")
+            .setDesc("Add a new Command to the right-click menu")
             .addButton((bt) => {
                 bt.setButtonText("Add Command")
                     .onClick(() => {
@@ -40,7 +40,7 @@ export default class CustomSidebarSettingsTab extends PluginSettingTab {
                     });
             });
 
-        this.plugin.settings.sidebarCommands.forEach(c => {
+        this.plugin.settings.menuCommands.forEach(c => {
             const iconDiv = createDiv({ cls: "CS-settings-icon" });
             setIcon(iconDiv, c.icon, 20);
             const setting = new Setting(containerEl)
@@ -48,7 +48,7 @@ export default class CustomSidebarSettingsTab extends PluginSettingTab {
                 .addButton(bt => {
                     bt.setButtonText("Remove Command")
                         .onClick(async () => {
-                            this.plugin.settings.sidebarCommands.remove(c);
+                            this.plugin.settings.menuCommands.remove(c);
                             await this.plugin.saveSettings();
                             this.display();
                             new Notice("You will need to restart Obsidian for the Command to dissapear.")
@@ -57,38 +57,6 @@ export default class CustomSidebarSettingsTab extends PluginSettingTab {
             setting.nameEl.prepend(iconDiv);
             setting.nameEl.addClass("CS-flex");
         });
-
-        //@ts-ignore
-        const children: HTMLCollection = this.app.workspace.leftRibbon.ribbonActionsEl.children;
-        for (let i = 0; i < children.length; i++) {
-            if (!this.plugin.settings.sidebarCommands.contains(this.plugin.settings.sidebarCommands.find(c => c.name === (children.item(i) as HTMLElement).getAttribute("aria-label")))) {
-                new Setting(containerEl)
-                    .setName("Hide " + (children.item(i) as HTMLElement).getAttribute("aria-label") + "?")
-                    .addToggle(cb => {
-                        cb.setValue((children.item(i) as HTMLElement).style.display === "none")
-                        cb.onChange(async value => {
-                            if(value === true) {
-                                (children.item(i) as HTMLElement).style.display = "none";
-                                this.plugin.settings.hiddenCommands.push((children.item(i) as HTMLElement).getAttribute("aria-label"));
-                                await this.plugin.saveSettings();
-                            } else {
-                                (children.item(i) as HTMLElement).style.display = "flex";
-                                this.plugin.settings.hiddenCommands.remove((children.item(i) as HTMLElement).getAttribute("aria-label"));
-                                await this.plugin.saveSettings();
-                            }
-                        });
-                    });
-            }
-        }
-
-        new Setting(containerEl)
-            .setName('Donate')
-            .setDesc('If you like this Plugin, consider donating to support continued development:')
-            .setClass("AT-extra")
-            .addButton((bt) => {
-                bt.buttonEl.outerHTML = `<a href="https://www.buymeacoffee.com/phibr0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=phibr0&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>`;
-            });
-
     }
 }
 
