@@ -19,16 +19,12 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
 
 	async onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): Promise<void> {
 		if (item.icon) {
-			this.plugin.addMenuItem(item);
-			this.plugin.settings.menuCommands.push(item);
-			await this.plugin.saveSettings();
-			
-			setTimeout(() => {
-				dispatchEvent(new Event("CS-addedCommand"));
-			}, 100);
+			this.plugin.addMenuItemSetting(item);
 		} else {
 			new IconPicker(this.plugin, item).open()
 		}
 	}
 
+
 }
+
