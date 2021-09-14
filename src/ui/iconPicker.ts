@@ -10,7 +10,7 @@ export default class IconPicker extends FuzzySuggestModal<string>{
 		super(plugin.app);
 		this.plugin = plugin;
 		this.command = command;
-		this.setPlaceholder("Pick an Icon");
+		this.setPlaceholder("Pick an icon");
 	}
 
 	private cap(string: string): string {

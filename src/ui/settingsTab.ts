@@ -25,14 +25,12 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
 
     display(): void {
         let { containerEl } = this;
-
         containerEl.empty();
-
         containerEl.createEl('h2', { text: 'Customizable Menu Settings' });
 
         new Setting(containerEl)
             .setName("Add Command to Menu")
-            .setDesc("Add a new Command to the right-click menu")
+            .setDesc("Add a new command to the right-click menu")
             .addButton((bt) => {
                 bt.setButtonText("Add Command")
                     .onClick(() => {
@@ -51,7 +49,7 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
                             this.plugin.settings.menuCommands.remove(c);
                             await this.plugin.saveSettings();
                             this.display();
-                            new Notice("You will need to restart Obsidian for the Command to dissapear.")
+                            new Notice("You will need to restart Obsidian for the command to disappear.")
                         })
                 });
             setting.nameEl.prepend(iconDiv);

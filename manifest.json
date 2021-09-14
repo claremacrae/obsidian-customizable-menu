@@ -1,9 +1,9 @@
 {
 	"id": "customizable-menu",
 	"name": "Customizable Menu",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"minAppVersion": "0.12.11",
-	"description": "This Plugin allows to add any Command to Obsidian's right-click menu.",
+	"description": "This plugin allows you to add any command to Obsidian's right-click menu.",
 	"author": "kzhovn",
 	"authorUrl": "https://github.com/kzhovn/",
 	"isDesktopOnly": false

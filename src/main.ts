@@ -48,7 +48,6 @@ export default class CustomMenuPlugin extends Plugin {
 				});
 			})
 		);
-
 	}
 
 	//add the given command to right-click menu (persistent, saved in settings)
@@ -62,6 +61,7 @@ export default class CustomMenuPlugin extends Plugin {
 		}, 100);
 	}
 
+	//why is this here?
 	addExtraCommands(){
 		this.addCommand({
 			id: "theme-toggle",
