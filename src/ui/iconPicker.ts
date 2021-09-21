@@ -40,7 +40,6 @@ export default class IconPicker extends FuzzySuggestModal<string>{
 	async onChooseItem(item: string): Promise<void> {
 		const command = {name: this.command.name, id: this.command.id, icon: item}
 		this.plugin.addMenuItemSetting(command);
-		
 	}
 
 }
