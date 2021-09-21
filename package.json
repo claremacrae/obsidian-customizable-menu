@@ -1,6 +1,6 @@
 {
   "name": "customizable-menu",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "This plugin allows you to add any command to Obsidian's right-click menu.",
   "main": "main.js",
   "scripts": {

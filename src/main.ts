@@ -54,6 +54,6 @@ export default class CustomMenuPlugin extends Plugin {
 		this.settings.menuCommands.push(command);
 		await this.saveSettings();
 		
-		settingTab.display();
+		settingTab.display(); //refresh settings tab
 	}
 }
