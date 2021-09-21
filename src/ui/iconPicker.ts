@@ -1,15 +1,19 @@
 import { FuzzySuggestModal, Command, FuzzyMatch, setIcon } from "obsidian";
 import CustomMenuPlugin from "src/main";
+import CommandSuggester from "./commandSuggester";
+import CustomMenuSettingsTab from "./settingsTab";
 
 
 export default class IconPicker extends FuzzySuggestModal<string>{
 	plugin: CustomMenuPlugin;
 	command: Command;
+	settingTab: CustomMenuSettingsTab;
 
-	constructor(plugin: CustomMenuPlugin, command: Command) {
-		super(plugin.app);
-		this.plugin = plugin;
+	constructor(suggester: CommandSuggester, command: Command) {
+		super(suggester.plugin.app);
+		this.plugin = suggester.plugin;
 		this.command = command;
+		this.settingTab = suggester.settingTab;
 		this.setPlaceholder("Pick an icon");
 	}
 
@@ -39,7 +43,7 @@ export default class IconPicker extends FuzzySuggestModal<string>{
 
 	async onChooseItem(item: string): Promise<void> {
 		const command = {name: this.command.name, id: this.command.id, icon: item}
-		this.plugin.addMenuItemSetting(command);
+		this.plugin.addMenuItemSetting(command, this.settingTab);
 	}
 
 }

@@ -18,9 +18,8 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
     constructor(app: App, plugin: CustomMenuPlugin) {
         super(app, plugin);
         this.plugin = plugin;
-        addEventListener("CS-addedCommand", () => {
-            this.display();
-        });
+
+        return this;
     }
 
     display(): void {
@@ -34,7 +33,7 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
             .addButton((bt) => {
                 bt.setButtonText("Add Command")
                     .onClick(() => {
-                        new CommandSuggester(this.plugin).open();
+                        new CommandSuggester(this.plugin, this).open();
                     });
             });
 

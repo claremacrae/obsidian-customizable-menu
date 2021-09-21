@@ -1,11 +1,16 @@
 import { FuzzySuggestModal, Command } from "obsidian";
 import CustomMenuPlugin from "src/main";
 import IconPicker from "./iconPicker";
+import CustomMenuSettingsTab from "./settingsTab";
 
 export default class CommandSuggester extends FuzzySuggestModal<Command> {
+	settingTab: CustomMenuSettingsTab;
+	plugin: CustomMenuPlugin;
 
-	constructor(private plugin: CustomMenuPlugin) {
+	constructor(plugin: CustomMenuPlugin, settingTab: CustomMenuSettingsTab) {
 		super(plugin.app);
+		this.settingTab = settingTab;
+		this.plugin = plugin;
 	}
 
 	getItems(): Command[] {
@@ -19,9 +24,9 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
 
 	async onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): Promise<void> {
 		if (item.icon) {
-			this.plugin.addMenuItemSetting(item);
+			this.plugin.addMenuItemSetting(item, this.settingTab);
 		} else {
-			new IconPicker(this.plugin, item).open()
+			new IconPicker(this, item).open()
 		}
 	}
 
