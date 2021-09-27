@@ -31,7 +31,7 @@ export default class CustomMenuPlugin extends Plugin {
 		await this.saveData(this.settings);
 	}
 
-	//add command to right-click menu (on load)
+	//add command to right-click menu (on open)
 	addMenuItem(command: Command) {
 		this.registerEvent(
 			this.app.workspace.on("editor-menu", (menu) => {

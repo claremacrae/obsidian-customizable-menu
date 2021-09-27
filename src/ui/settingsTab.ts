@@ -30,22 +30,23 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Add Command to Menu")
             .setDesc("Add a new command to the right-click menu")
-            .addButton((bt) => {
-                bt.setButtonText("Add Command")
+            .addButton((button) => {
+                button.setButtonText("Add Command")
                     .onClick(() => {
                         new CommandSuggester(this.plugin, this).open();
                     });
             });
 
-        this.plugin.settings.menuCommands.forEach(c => {
+        this.plugin.settings.menuCommands.forEach(command => {
             const iconDiv = createDiv({ cls: "CS-settings-icon" });
-            setIcon(iconDiv, c.icon, 20);
+            setIcon(iconDiv, command.icon, 20);
             const setting = new Setting(containerEl)
-                .setName(c.name)
-                .addButton(bt => {
-                    bt.setButtonText("Remove Command")
+                .setName(command.name)
+                .addExtraButton(button => {
+                    button.setIcon("trash")
+                        .setTooltip("Remove command")
                         .onClick(async () => {
-                            this.plugin.settings.menuCommands.remove(c);
+                            this.plugin.settings.menuCommands.remove(command);
                             await this.plugin.saveSettings();
                             this.display();
                             new Notice("You will need to restart Obsidian for the command to disappear.")
