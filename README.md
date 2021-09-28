@@ -6,5 +6,7 @@ This plugin allows you to add any commands, including those of plugins, to the r
 
 If the command doesn't yet have any icon, you can select from a range of icons, including Obsidian's internal icons and all Feather Icons.
 
+Note that adding or editing a command's icon will cause that icon to be set everywhere the command appears, not just in the right-click menu.
+
 ## Thanks
 This plugin is a fork of phibr0's excellent [customizable sidebar](plugin).
