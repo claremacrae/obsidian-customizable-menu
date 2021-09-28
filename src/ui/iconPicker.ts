@@ -6,15 +6,18 @@ import CustomMenuSettingsTab from "./settingsTab";
 
 export default class IconPicker extends FuzzySuggestModal<string>{
 	plugin: CustomMenuPlugin;
-	command: Command;
 	settingTab: CustomMenuSettingsTab;
+	command: Command;
+	editMode: boolean;
 
-	constructor(suggester: CommandSuggester, command: Command) {
+	constructor(suggester: CommandSuggester, command: Command, editMode = false) {
 		super(suggester.plugin.app);
 		this.plugin = suggester.plugin;
-		this.command = command;
 		this.settingTab = suggester.settingTab;
-		this.setPlaceholder("Pick an icon");
+		this.command = command;
+		this.editMode = editMode;
+
+		this.setPlaceholder("Pick an icon");	
 	}
 
 	private cap(string: string): string {
@@ -42,7 +45,13 @@ export default class IconPicker extends FuzzySuggestModal<string>{
 	}
 
 	async onChooseItem(item: string): Promise<void> {
-		const command = {name: this.command.name, id: this.command.id, icon: item}
-		this.plugin.addMenuItemSetting(command, this.settingTab);
+		if (this.editMode === false) {
+			const command = {name: this.command.name, id: this.command.id, icon: item}
+			await this.plugin.addMenuItemSetting(command, this.settingTab);	
+		} else {
+			this.command.icon = item;
+			await this.plugin.saveSettings();
+			this.settingTab.display();
+		}
 	}
 }

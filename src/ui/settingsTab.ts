@@ -1,16 +1,17 @@
 import { PluginSettingTab, App, Setting, setIcon, Command, Notice } from "obsidian";
 import CustomMenuPlugin from "src/main";
 import CommandSuggester from "./commandSuggester";
+import IconPicker from "./iconPicker";
+
 
 export interface CustomMenuSettings {
     menuCommands: Command[];
-    hiddenCommands: string[];
 }
 
 export const DEFAULT_SETTINGS: CustomMenuSettings = {
     menuCommands: [],
-    hiddenCommands: [],
 }
+
 
 export default class CustomMenuSettingsTab extends PluginSettingTab {
     plugin: CustomMenuPlugin;
@@ -18,8 +19,6 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
     constructor(app: App, plugin: CustomMenuPlugin) {
         super(app, plugin);
         this.plugin = plugin;
-
-        return this;
     }
 
     display(): void {
@@ -50,6 +49,13 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
                             await this.plugin.saveSettings();
                             this.display();
                             new Notice("You will need to restart Obsidian for the command to disappear.")
+                        })
+                })
+                .addExtraButton(button => {
+                    button.setIcon("gear")
+                        .setTooltip("Edit icon")
+                        .onClick(() => {
+                            new IconPicker(new CommandSuggester(this.plugin, this), command, true).open(); //rewrite icon picker so it isn't taking a command suggester
                         })
                 });
             setting.nameEl.prepend(iconDiv);

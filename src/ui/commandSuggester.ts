@@ -3,6 +3,7 @@ import CustomMenuPlugin from "src/main";
 import IconPicker from "./iconPicker";
 import CustomMenuSettingsTab from "./settingsTab";
 
+
 export default class CommandSuggester extends FuzzySuggestModal<Command> {
 	settingTab: CustomMenuSettingsTab;
 	plugin: CustomMenuPlugin;
@@ -29,7 +30,5 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
 			new IconPicker(this, item).open()
 		}
 	}
-
-
 }
 
