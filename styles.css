@@ -1,19 +1,19 @@
 /*Icon Picker*/
-.CS-icon {
+.custom-menu-icon {
     transform: translateY(3px);
     margin-right: 8px;
 }
 
-.CS-icon-container{
+.custom-menu-icon-container{
     display: flex;
 }
 
-.CS-settings-icon {
+.custom-menu-settings-icon {
     height: 20px;
     margin-right: 0.5rem;
     transform: translateY(2px);
 }
 
-.CS-flex {
+.custom-menu-flex {
     display: flex;
 }

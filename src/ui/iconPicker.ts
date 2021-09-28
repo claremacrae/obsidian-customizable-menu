@@ -37,8 +37,8 @@ export default class IconPicker extends FuzzySuggestModal<string>{
 	}
 
 	renderSuggestion(item: FuzzyMatch<string>, el: HTMLElement): void {
-		el.addClass("CS-icon-container");
-		const div = createDiv({ cls: "CS-icon" });
+		el.addClass("custom-menu-icon-container");
+		const div = createDiv({ cls: "custom-menu-icon" });
 		el.appendChild(div);
 		setIcon(div, item.item);
 		super.renderSuggestion(item, el);

@@ -37,7 +37,7 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
             });
 
         this.plugin.settings.menuCommands.forEach(command => {
-            const iconDiv = createDiv({ cls: "CS-settings-icon" });
+            const iconDiv = createDiv({ cls: "custom-menu-settings-icon" });
             setIcon(iconDiv, command.icon, 20);
             const setting = new Setting(containerEl)
                 .setName(command.name)
@@ -59,7 +59,7 @@ export default class CustomMenuSettingsTab extends PluginSettingTab {
                         })
                 });
             setting.nameEl.prepend(iconDiv);
-            setting.nameEl.addClass("CS-flex");
+            setting.nameEl.addClass("custom-menu-flex");
         });
     }
 }
