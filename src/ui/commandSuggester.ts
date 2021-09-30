@@ -23,7 +23,7 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
 		return item.name;
 	}
 
-	onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): void {
+	onChooseItem(item: Command): void {
 		if (item.icon) {
 			this.plugin.addMenuItemSetting(item, this.settingTab);
 		} else {

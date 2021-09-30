@@ -38,8 +38,7 @@ export default class CustomMenuPlugin extends Plugin {
 		this.registerEvent(
 			this.app.workspace.on("editor-menu", (menu) => {
 				menu.addItem((item) => {
-					item
-					.setTitle(command.name)
+					item.setTitle(command.name)
 					.setIcon(command.icon)
 					.onClick(() => { 
 						//@ts-ignore
@@ -61,7 +60,7 @@ export default class CustomMenuPlugin extends Plugin {
 
 
 	//add proprly formatted feather icons to list
-	addFeatherIcons() {
+	private addFeatherIcons() {
 		Object.values(feather.icons).forEach((i) => {
 			const svg = i.toSvg({viewBox: "0 0 24 24", width: "100", height: "100"});
 			addIcon("feather-" + i.name, svg);
